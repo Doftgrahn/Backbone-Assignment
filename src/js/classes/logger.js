@@ -2,32 +2,56 @@ const Backbone = require('backbone');
 const $ = require('jquery');
 const _ = require('underscore');
 
-
 const LoginModel = Backbone.Model.extend({
   defaults: {
-    current: ''
+    isLoggedin: false
   }
 });
 
-const LoginViewer = Backbone.View.extend({});
-console.log(LoginViewer);
+const loginModel = new LoginModel;
+
+
+const LoginViewer = Backbone.View.extend({
+  initialize: function() {
+    this.listenTo(this.model, 'change', this.render)
+  },
+  render: function() {
+    let isLoggedIn = this.model.get('isLoggedIn');
+    let logInButton;
+    if (isLoggedIn !== false) {
+      logInButton = `<button id="loginButton">Sign in!</button>`;
+    } else {
+      logInButton = `<button id="loginButton">Sign out!</button>`;
+    }
+    this.$el.html(logInButton);
+  },
+  events: {
+    "click loginButton": 'logInEvent'
+  },
+  logInEvent: function(event) {
+    let loggedIn = this.model.get('isLoggedIn');
+    if (loggedIn == false) {
+      console.log('hej');
+    }
+  }
+});
 
 
 
-
-
-
-
+function renderItAll() {
+  let finalViewer = new LoginViewer({
+    el: '.b-login__container',
+    model: loginModel
+  });
+  finalViewer.render()
+}
 
 
 class Logger {
   constructor() {
-    console.log('Logger module working?');
+    renderItAll()
   }
 };
-
-
-
 
 
 export default Logger;
