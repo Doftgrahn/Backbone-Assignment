@@ -8,7 +8,39 @@
   &__wrapper {
     border-radius: 20px;
     width: 50%;
-    height: 300px;
-    background-color: lightblue;
+    height: 200px;
+  }
+
+  &__header {
+    display: inline-flex;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    & > div {
+      background-color: lightblue;
+      border: 1px solid orange;
+      display: inline-block;
+      padding: 0.5em 1em 3px;
+      margin: 0.05em;
+      border-radius: 20px 1em 0 0;
+      transition: all 0.7s;
+
+      &:hover {
+        background-color: tomato;
+      }
+    }
+  }
+
+  &__tabContent {
+    z-index: 10;
+    padding: 20px;
+    background-color: tomato;
+    border-radius: 0 0 20px 20px;
+    height: 100%;
+    margin-top: 0;
+    z-index: 1;
+    margin-left: 0;
   }
 }

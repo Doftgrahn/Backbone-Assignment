@@ -27,8 +27,8 @@ const LoginViewer = Backbone.View.extend({
   },
   render: function() {
     let isLoggedIn = this.model.get('isLoggedin');
-    let signInText = `Sign in!`;
-    let signOutText = `Sign Out`;
+    let signInText = `Logga in!`;
+    let signOutText = `Logga ut!`;
     let signInButton = `<button id="loginButton">${signInText}</button>`;
     let logOutButton = `<button id="loginButton">${signOutText}</button>`;
     if (isLoggedIn) {
@@ -44,6 +44,7 @@ const LoginViewer = Backbone.View.extend({
     this.model.handler(event);
   }
 });
+
 function renderItAll() {
   let finalViewer = new LoginViewer({
     el: '.b-login__container',
@@ -51,7 +52,6 @@ function renderItAll() {
   });
   finalViewer.render()
 }
-
 
 export default class Logger {
   constructor() {
