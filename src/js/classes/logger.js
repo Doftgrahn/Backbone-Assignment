@@ -4,40 +4,46 @@ const _ = require('underscore');
 
 const LoginModel = Backbone.Model.extend({
   defaults: {
-    isLoggedin: false
+    isLoggedin: true
+  },
+  handler: function(event) {
+    let defaultValue = this.get('isLoggedin');
+    if (defaultValue) {
+      this.set({
+        isLoggedin: false
+      })
+    } else {
+      this.set({
+        isLoggedin: true
+      })
+    }
   }
 });
 
 const loginModel = new LoginModel;
-
-
 const LoginViewer = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.model, 'change', this.render)
   },
   render: function() {
-    let isLoggedIn = this.model.get('isLoggedIn');
-    let logInButton;
-    if (isLoggedIn !== false) {
-      logInButton = `<button id="loginButton">Sign in!</button>`;
+    let isLoggedIn = this.model.get('isLoggedin');
+    let signInText = `Sign in!`;
+    let signOutText = `Sign Out`;
+    let signInButton = `<button id="loginButton">${signInText}</button>`;
+    let logOutButton = `<button id="loginButton">${signOutText}</button>`;
+    if (isLoggedIn) {
+      this.$el.html(signInButton);
     } else {
-      logInButton = `<button id="loginButton">Sign out!</button>`;
+      this.$el.html(logOutButton);
     }
-    this.$el.html(logInButton);
   },
   events: {
-    "click loginButton": 'logInEvent'
+    "click #loginButton": 'clickHandler'
   },
-  logInEvent: function(event) {
-    let loggedIn = this.model.get('isLoggedIn');
-    if (loggedIn == false) {
-      console.log('hej');
-    }
+  clickHandler: function(event) {
+    this.model.handler(event);
   }
 });
-
-
-
 function renderItAll() {
   let finalViewer = new LoginViewer({
     el: '.b-login__container',
@@ -47,11 +53,8 @@ function renderItAll() {
 }
 
 
-class Logger {
+export default class Logger {
   constructor() {
     renderItAll()
   }
 };
-
-
-export default Logger;
