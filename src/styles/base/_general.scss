@@ -3,10 +3,16 @@
   font-size: 20px;
 }
 
-body {
-  margin: 0;
-  background-color: #77bf87;
-  padding:30px;
+html {
+  height: 100%;
 }
 
-button:hover { cursor: pointer; }
+body {
+  margin: 0;
+  background: linear-gradient(45deg, $color-white 0%,$color-yellow 100%);
+  background-repeat: no-repeat;
+}
+
+button:hover {
+  cursor: pointer;
+}

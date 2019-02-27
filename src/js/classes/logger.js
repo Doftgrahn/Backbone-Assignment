@@ -27,8 +27,8 @@ const LoginViewer = Backbone.View.extend({
   },
   render: function() {
     let isLoggedIn = this.model.get('isLoggedin');
-    let signInText = `Logga in!`;
-    let signOutText = `Logga ut!`;
+    let signInText = `🌱Logga in!🌱`;
+    let signOutText = `🌱Logga ut!🌱`;
     let signInButton = `<button id="loginButton">${signInText}</button>`;
     let logOutButton = `<button id="loginButton">${signOutText}</button>`;
     if (isLoggedIn) {

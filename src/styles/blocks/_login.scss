@@ -5,6 +5,8 @@
   justify-content: center;
 
   h1 {
+    color: $color-white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     margin: 50px auto 0;
     text-align: center;
     letter-spacing: 10px;
@@ -14,6 +16,8 @@
   }
 
   p {
+    color: $color-white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     margin-top: 0;
     font-weight: 800;
     letter-spacing: 4px;
@@ -24,7 +28,7 @@
 
   &__wrapper {
     border-radius: 50px;
-    background-color: #9e5c99;
+    background-color: $color-green;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -43,18 +47,21 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    background-color: lightblue;
+    background-color: $color-yellow;
     height: 90%;
     width: 90%;
 
     #loginButton {
-      outline:none;
-      border-radius: 20px;
+      color: $color-yellow;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      background-color: $color-green;
+      outline: none;
+      border-radius: 10px;
       padding: 0.5em;
-      transition: 0.2s ease;
+      transition: 0.1s ease;
 
       &:hover {
-        background-color: orange;
+        background-color: lightblue;
       }
     }
   }
