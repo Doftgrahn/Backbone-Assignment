@@ -34,8 +34,8 @@
     }
 
     .active {
-      background-color: $color-white;
-      color: red;
+      background-color: $color-green;
+      color: $color-white;
     }
   }
 
@@ -48,5 +48,18 @@
     margin-top: -1px;
     z-index: 1;
     margin-left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+
+      &:hover {
+        background-color: $color-green;
+      }
+    }
   }
 }

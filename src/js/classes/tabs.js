@@ -4,76 +4,103 @@ const _ = require('underscore');
 
 const TabModel = Backbone.Model.extend({
   defalts: {
-    state: '',
-    class: 'active'
+    class: 'active',
+    tab1: 'tab1',
+    tab2: 'tab2',
+    tab3: 'tab3'
+  },
+  handleTabs: function(event) {
+    console.log('klickas det?');
   },
   addActive: function(event) {
     this.element = event.target;
-    console.log('klickas det', this.element);
+    this.active = document.querySelector('.active');
+    if (this.active && this.active != this.element) {
+      this.active.classList.remove('active');
+      this.set({
+        class: ''
+      });
+    }
     this.element.classList.add('active');
+    this.set({
+      class: 'active'
+    });
   },
-  removeActive: function(event) {
-
+  leftButton: function() {
+    console.log('leftButton');
+  },
+  rightButton: function() {
+    console.log('rightButton');
   }
 });
 
 const tabModel = new TabModel;
+const anothertabModel = new TabModel;
 
-const ViewTabs = Backbone.View.extend({
+const ViewTabHeader = Backbone.View.extend({
   initialize: function() {
-    this.listenTo(this.mode, 'change', this.render)
+    this.listenTo(this.model, 'click', this.render)
   },
   render: function() {
-    let headerContent = `<div class="b-tabs__header"><div class="tab">Tab 1</div><div class="tab">Tab 2</div><div class="tab">Tab 3</div></div>`;
-    let tabsContent = `<div class="b-tabs__tabContent"><div></div></div>`;
-    let content = `${headerContent}${tabsContent}`;
-    this.$el.html(content);
+    const tabIt = this.model.get('class');
+    let headerContent = `<div class="tab" data-id=tab1>Tab 1</div> <div class="tab" data-id="tab2">Tab 2</div> <div class="tab" data-id=tab3>Tab 3</div>`;
+    this.$el.html(headerContent);
   },
   events: {
-    "click .tab": 'addActiveClass',
-    "click": 'removeActive'
+    "click .tab": 'addActiveClass'
   },
   addActiveClass: function(event) {
     this.model.addActive(event);
-  },
-  removeActive: function(event) {
-    this.model.removeActive(event)
   }
 });
 
-const TabelViewContent = Backbone.View.extend({
+const TabContainerOne = Backbone.View.extend({
   initialize: function() {
-    this.ListenTo(this.model, 'change', this.render)
+    this.listenTo(this.model, 'change', this.render)
   },
   render: function() {
-    console.log('hej');
+    const tab1 = `<button id="left">⬅️</button><div class="content" id="tab1" >content1</div><button id="right">➡️</button>`;
+    const tab2 = `<div class="content" id="tab2" ><button>⬅️</button>content2<button>➡️</button></div>`;
+    const tab3 = `<div class="content" id="tab3" ><button>⬅️</button>content3<button>➡️</button></div>`;
+    this.$el.html(tab1);
   },
   events: {
-    "click": 'addActiveClass',
-    "click": 'removeActive'
+    "change .content": 'handleTabs',
+    "click #left": 'leftButton',
+    "click #right": 'rightButton'
   },
-  addActiveClass: function(event) {
-    this.model.addActive(event);
+  handleTabss: function(event) {
+    this.model.handleTabs()
   },
-  removeActive: function(event) {
-    this.model.removeActive(event)
+  leftButton: function(event) {
+    this.model.leftButton()
+  },
+  rightButton: function(event) {
+    this.model.rightButton()
   }
 });
 
-
-
-function viewTabsfinal() {
-  let viewTabs = new ViewTabs({
-    el: '.b-tabs__wrapper',
-    model: tabModel
+function tabHeader() {
+  let viewTabs = new ViewTabHeader({
+    el: '.b-tabs__header',
+    model: anothertabModel
   });
   viewTabs.render()
 };
 
+function tabContent() {
+  let viewContent = new TabContainerOne({
+    el: '.b-tabs__tabContent',
+    model: tabModel
+  })
+  viewContent.render()
+}
+
 
 export default class Tabs {
   constructor() {
-    viewTabsfinal()
+    tabHeader()
+    tabContent()
 
   }
 }
