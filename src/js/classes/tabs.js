@@ -5,12 +5,12 @@ const _ = require('underscore');
 const TabModel = Backbone.Model.extend({
   defalts: {
     class: 'active',
-    tab1: 'tab1',
-    tab2: 'tab2',
-    tab3: 'tab3'
+    tab1: 'data-one',
+    tab2: 'data-two',
+    tab3: 'data-three'
   },
   handleTabs: function(event) {
-    console.log('klickas det?');
+    console.log('hej');
   },
   addActive: function(event) {
     this.element = event.target;
@@ -35,7 +35,6 @@ const TabModel = Backbone.Model.extend({
 });
 
 const tabModel = new TabModel;
-const anothertabModel = new TabModel;
 
 const ViewTabHeader = Backbone.View.extend({
   initialize: function() {
@@ -43,7 +42,8 @@ const ViewTabHeader = Backbone.View.extend({
   },
   render: function() {
     const tabIt = this.model.get('class');
-    let headerContent = `<div class="tab" data-id=tab1>Tab 1</div> <div class="tab" data-id="tab2">Tab 2</div> <div class="tab" data-id=tab3>Tab 3</div>`;
+
+    let headerContent = `<div class="tab">Tab 1</div> <div class="tab">Tab 2</div> <div class="tab">Tab 3</div>`;
     this.$el.html(headerContent);
   },
   events: {
@@ -54,45 +54,54 @@ const ViewTabHeader = Backbone.View.extend({
   }
 });
 
-const TabContainerOne = Backbone.View.extend({
+const TabContainer = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.model, 'change', this.render)
   },
   render: function() {
-    const tab1 = `<button id="left">⬅️</button><div class="content" id="tab1" >content1</div><button id="right">➡️</button>`;
-    const tab2 = `<div class="content" id="tab2" ><button>⬅️</button>content2<button>➡️</button></div>`;
-    const tab3 = `<div class="content" id="tab3" ><button>⬅️</button>content3<button>➡️</button></div>`;
+    let tabOne = this.model.get('tab1');
+    let tabTwo = this.model.get('tab2');
+    let tabThree = this.model.get('tab3');
+    const buttonLeft = `<button id="left">⬅️</button>`;
+    const buttonRight = `<button id="right">➡️</button>`;
+    const tab1 = `<div class="content"  id="tab1" >content1</div>`;
+    const tab2 = `<div class="content" id="tab2" >content1</div>`;
+    const tab3 = `<div class="content" id="tab3" >content1</div>`;
+    let content;
+    console.log(tabOne);
+
     this.$el.html(tab1);
   },
   events: {
-    "change .content": 'handleTabs',
+    "click .content": 'handleTabs',
     "click #left": 'leftButton',
     "click #right": 'rightButton'
   },
-  handleTabss: function(event) {
-    this.model.handleTabs()
+  handleTabs: function(event) {
+    this.model.handleTabs(event)
   },
   leftButton: function(event) {
-    this.model.leftButton()
+    this.model.leftButton(event)
   },
   rightButton: function(event) {
-    this.model.rightButton()
+    this.model.rightButton(event)
   }
 });
 
 function tabHeader() {
   let viewTabs = new ViewTabHeader({
     el: '.b-tabs__header',
-    model: anothertabModel
+    model: tabModel
   });
   viewTabs.render()
 };
 
 function tabContent() {
-  let viewContent = new TabContainerOne({
+  let viewContent = new TabContainer({
     el: '.b-tabs__tabContent',
     model: tabModel
   })
+
   viewContent.render()
 }
 
