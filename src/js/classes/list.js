@@ -3,7 +3,12 @@ const $ = require('jquery');
 const _ = require('underscore');
 
 
-const ListModel = Backbone.Model.extend({});
+const ListModel = Backbone.Model.extend({
+  defaults: {
+    string: '',
+    number: null
+  }
+});
 
 
 

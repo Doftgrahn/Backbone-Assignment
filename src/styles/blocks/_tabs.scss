@@ -56,12 +56,11 @@
 
     button {
       height:50px;
-      background:lightblue ;
-      border: none;
+      background:$color-yellow ;
       outline: none;
 
       &:hover {
-        background-color: $color-green;
+        background-color: $color-white;
       }
     }
   }

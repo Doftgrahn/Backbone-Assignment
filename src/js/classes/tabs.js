@@ -10,10 +10,11 @@ const TabModel = Backbone.Model.extend({
     tab3: false
   },
   addActive: function(event) {
+    let active = this.get('class');
     this.element = event.target;
     this.active = document.querySelector('.active');
     if (this.active && this.active != this.element) {
-      this.active.classList.remove('active');
+       this.active.classList.remove('active');
       this.set({
         class: ''
       });
@@ -28,12 +29,12 @@ const TabModel = Backbone.Model.extend({
     this.set({tab2: false});
     this.set({tab3: false});
   },
-  tab2: function() {
+  tab2: function(event) {
     this.set({tab1:false});
     this.set({tab2:true});
     this.set({tab3:false});
   },
-  tab3:function() {
+  tab3:function(event) {
     this.set({tab1:false});
     this.set({tab2:false});
     this.set({tab3:true});
@@ -70,7 +71,6 @@ const ViewTabHeader = Backbone.View.extend({
   },
   render: function() {
     const tabIt = this.model.get('class');
-
     const tabHeader1 = `<div class="tab" id="one">Tab 1</div>`;
     const tabHeader2 = `<div class="tab" id="two">Tab 2</div>`;
     const tabHeader3 = `<div class="tab" id="three">Tab 3</div>`;
@@ -86,13 +86,13 @@ const ViewTabHeader = Backbone.View.extend({
   addActiveClass: function(event) {
     this.model.addActive(event);
   },
-  tabOne: function() {
+  tabOne: function(event) {
     this.model.tab1();
   },
-  tabTwo: function() {
+  tabTwo: function(event) {
     this.model.tab2();
   },
-  tabThree: function(){
+  tabThree: function(event){
     this.model.tab3();
   }
 });
