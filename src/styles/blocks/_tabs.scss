@@ -48,18 +48,15 @@
     margin-top: -1px;
     z-index: 1;
     margin-left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    .container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      &.active {
-        display: none;
-      }
-    }
+
 
     button {
-      background: none;
+      height:50px;
+      background:lightblue ;
       border: none;
       outline: none;
 
@@ -68,4 +65,8 @@
       }
     }
   }
+}
+
+.show {
+  display: block;
 }

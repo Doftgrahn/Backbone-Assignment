@@ -3,14 +3,11 @@ const $ = require('jquery');
 const _ = require('underscore');
 
 const TabModel = Backbone.Model.extend({
-  defalts: {
+  defaults: {
     class: 'active',
-    tab1: 'data-one',
-    tab2: 'data-two',
-    tab3: 'data-three'
-  },
-  handleTabs: function(event) {
-    console.log('hej');
+    tab1: true,
+    tab2: false,
+    tab3: false
   },
   addActive: function(event) {
     this.element = event.target;
@@ -26,11 +23,42 @@ const TabModel = Backbone.Model.extend({
       class: 'active'
     });
   },
-  leftButton: function() {
-    console.log('leftButton');
+  tab1: function() {
+    this.set({tab1: true});
+    this.set({tab2: false});
+    this.set({tab3: false});
   },
-  rightButton: function() {
-    console.log('rightButton');
+  tab2: function() {
+    this.set({tab1:false});
+    this.set({tab2:true});
+    this.set({tab3:false});
+  },
+  tab3:function() {
+    this.set({tab1:false});
+    this.set({tab2:false});
+    this.set({tab3:true});
+  },
+  previousButton: function () {
+    let tab1 = this.get('tab1');
+    let tab2 = this.get('tab2');
+    if(tab1) {
+      this.tab3();
+    } else if(tab2) {
+      this.tab1();
+    }else {
+      this.tab2()
+    }
+  },
+  nextButton: function () {
+    let tab1 = this.get('tab1');
+    let tab2 = this.get('tab2');
+    if(tab1) {
+      this.tab2()
+    } else if(tab2) {
+      this.tab3()
+    } else {
+      this.tab1()
+    };
   }
 });
 
@@ -43,14 +71,29 @@ const ViewTabHeader = Backbone.View.extend({
   render: function() {
     const tabIt = this.model.get('class');
 
-    let headerContent = `<div class="tab">Tab 1</div> <div class="tab">Tab 2</div> <div class="tab">Tab 3</div>`;
+    const tabHeader1 = `<div class="tab" id="one">Tab 1</div>`;
+    const tabHeader2 = `<div class="tab" id="two">Tab 2</div>`;
+    const tabHeader3 = `<div class="tab" id="three">Tab 3</div>`;
+    let headerContent = `${tabHeader1}${tabHeader2}${tabHeader3}`;
     this.$el.html(headerContent);
   },
   events: {
-    "click .tab": 'addActiveClass'
+    "click .tab": 'addActiveClass',
+    "click #one": 'tabOne',
+    "click #two": 'tabTwo',
+    "click #three":'tabThree'
   },
   addActiveClass: function(event) {
     this.model.addActive(event);
+  },
+  tabOne: function() {
+    this.model.tab1();
+  },
+  tabTwo: function() {
+    this.model.tab2();
+  },
+  tabThree: function(){
+    this.model.tab3();
   }
 });
 
@@ -59,32 +102,42 @@ const TabContainer = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render)
   },
   render: function() {
-    let tabOne = this.model.get('tab1');
-    let tabTwo = this.model.get('tab2');
-    let tabThree = this.model.get('tab3');
-    const buttonLeft = `<button id="left">⬅️</button>`;
-    const buttonRight = `<button id="right">➡️</button>`;
-    const tab1 = `<div class="content"  id="tab1" >content1</div>`;
-    const tab2 = `<div class="content" id="tab2" >content1</div>`;
-    const tab3 = `<div class="content" id="tab3" >content1</div>`;
+    let tab1 = this.model.get('tab1');
+    let tab2 = this.model.get('tab2');
+    let tab3 = this.model.get('tab3');
+    const prevButton = `<button id="prev">prev</button>`;
+    const nextButton = `<button id="next">next</button>`;
     let content;
-    console.log(tabOne);
+if(tab1) {
+  const tab1 = `<div class="content" id="one" >content1</div>`;
+  content = tab1;
+}
+else if (tab2){
+  const tab2 = `<div class="content" id="two" >content2</div>`;
+  content = tab2;
+} else if(tab3){
+  const tab3 = `<div class="content" id="three" >content3</div>`;
+  content = tab3;
+}
 
-    this.$el.html(tab1);
+    this.$el.html(`${prevButton}${content}${nextButton}`);
   },
   events: {
-    "click .content": 'handleTabs',
-    "click #left": 'leftButton',
-    "click #right": 'rightButton'
+    "change .content": 'showTabs',
+    "click #prev": 'previousButton',
+    "click #next": 'nextButton'
   },
-  handleTabs: function(event) {
-    this.model.handleTabs(event)
+  addActiveClass: function(event) {
+    this.model.addActiveClass(event)
   },
-  leftButton: function(event) {
-    this.model.leftButton(event)
+  showTabs: function(event) {
+    this.model.showTabs(event)
   },
-  rightButton: function(event) {
-    this.model.rightButton(event)
+  previousButton: function() {
+    this.model.previousButton()
+  },
+  nextButton:function() {
+    this.model.nextButton()
   }
 });
 
@@ -94,16 +147,16 @@ function tabHeader() {
     model: tabModel
   });
   viewTabs.render()
-};
+}
 
 function tabContent() {
   let viewContent = new TabContainer({
     el: '.b-tabs__tabContent',
     model: tabModel
   })
-
   viewContent.render()
 }
+
 
 
 export default class Tabs {
