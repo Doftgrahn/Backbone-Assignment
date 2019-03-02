@@ -10,19 +10,19 @@ const TabModel = Backbone.Model.extend({
     tab3: false
   },
   addActive: function(event) {
+    this.active = document.querySelector('.active');
     let active = this.get('class');
     this.element = event.target;
-    this.active = document.querySelector('.active');
     if (this.active && this.active != this.element) {
        this.active.classList.remove('active');
-      this.set({
-        class: ''
-      });
+      // this.set({
+      //   class: ''
+      // });
     }
     this.element.classList.add('active');
-    this.set({
-      class: 'active'
-    });
+    // this.set({
+    //   class: 'active'
+    // });
   },
   tab1: function() {
     this.set({tab1: true});
@@ -56,7 +56,7 @@ const TabModel = Backbone.Model.extend({
     if(tab1) {
       this.tab2()
     } else if(tab2) {
-      this.tab3()
+      this.tab3();
     } else {
       this.tab1()
     };
@@ -71,9 +71,9 @@ const ViewTabHeader = Backbone.View.extend({
   },
   render: function() {
     const tabIt = this.model.get('class');
-    const tabHeader1 = `<div class="tab" id="one">Tab 1</div>`;
-    const tabHeader2 = `<div class="tab" id="two">Tab 2</div>`;
-    const tabHeader3 = `<div class="tab" id="three">Tab 3</div>`;
+    const tabHeader1 = `<div class="tab" id="one">Home</div>`;
+    const tabHeader2 = `<div class="tab" id="two">About</div>`;
+    const tabHeader3 = `<div class="tab" id="three">History</div>`;
     let headerContent = `${tabHeader1}${tabHeader2}${tabHeader3}`;
     this.$el.html(headerContent);
   },
@@ -109,14 +109,14 @@ const TabContainer = Backbone.View.extend({
     const nextButton = `<button id="next">next</button>`;
     let content;
 if(tab1) {
-  const tab1 = `<div class="content" id="one" >content1</div>`;
+  const tab1 = `<div class="content" id="one" >Welcome!</div>`;
   content = tab1;
 }
 else if (tab2){
-  const tab2 = `<div class="content" id="two" >content2</div>`;
+  const tab2 = `<div class="content" id="two" >to</div>`;
   content = tab2;
 } else if(tab3){
-  const tab3 = `<div class="content" id="three" >content3</div>`;
+  const tab3 = `<div class="content" id="three" >my tabs!</div>`;
   content = tab3;
 }
 
@@ -163,6 +163,5 @@ export default class Tabs {
   constructor() {
     tabHeader()
     tabContent()
-
   }
 }
