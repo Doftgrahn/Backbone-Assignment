@@ -14,10 +14,6 @@ const data = [{
   {
     artist: 'Leonardo da Vinci',
     artForm: 'Classic Art'
-  },
-  {
-    artist: 'Jennie Erlandsson',
-    artForm: 'Abstract minimalism (aka pilla)'
   }
 ];
 
@@ -66,11 +62,11 @@ const ArtistView = Backbone.View.extend({
       let artist = `<input class="editArtist" value="${artistForm}"/>`;
       let artForm = `<input class="editArtForm" value="${artFormForm}"/>`;
       let saveArtist = `<span class="save">✔️</span>`;
-      content = `${artist} ${artForm} ${saveArtist} ${remove}`;
+      content = `Artist:${artist} Artform:${artForm} <div class="icons">${saveArtist} ${remove}</div>`;
     } else {
       let name = this.model.get('artist');
       let artForm = this.model.get('artForm');
-      content = `${name} painted ${artForm}  ${edit} ${remove}`;
+      content = `Artist: ${name} Artorm: ${artForm}<div class="icons">${edit} ${remove}</div>`;
     }
     this.$el.html(content);
   },
@@ -116,7 +112,7 @@ const ArtistViewList = Backbone.View.extend({
         model: artist
       });
       artistView.render();
-      ul.append(artistView.$el);
+      ul.append(artistView.el);
     });
     el.html('');
     el.append(ul);
@@ -141,8 +137,12 @@ const ArtistViewList = Backbone.View.extend({
     artist: '',
     artForm: ''
   },
-  onArtistChange: function(event) {this.form.artist = event.target.value;},
-  onArtFormChange: function(event) {this.form.artForm = event.target.value;},
+  onArtistChange: function(event) {
+    this.form.artist = event.target.value;
+  },
+  onArtFormChange: function(event) {
+    this.form.artForm = event.target.value;
+  },
 });
 
 export default class List {
