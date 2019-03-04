@@ -43,7 +43,6 @@
     padding: 20px;
     background-color: $color-green;
     border-radius: 0 0 20px 20px;
-    height: 100%;
     margin-top: -1px;
     z-index: 1;
     margin-left: 0;
@@ -54,7 +53,7 @@
     button {
       background: $color-yellow;
       border-radius: 20px;
-      padding:.3em;
+      padding: 0.3em;
       outline: none;
 
       &:hover {

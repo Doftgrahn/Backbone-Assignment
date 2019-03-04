@@ -4,8 +4,6 @@ import List from './classes/list';
 import Data from './classes/list';
 
 
-
-
 class App {
   constructor() {
     new Logger();

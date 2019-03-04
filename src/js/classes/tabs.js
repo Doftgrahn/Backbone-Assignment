@@ -5,13 +5,13 @@ const _ = require('underscore');
 const tabTitles = ['Home', 'About', 'History'];
 
 const tabContent = [{
-    content: 'Tab1 Content here'
+    content: 'there was once a man without anything'
   },
   {
-    content: 'tab2 content here'
+    content: 'then he succumbed to gardening'
   },
   {
-    content: 'tab3 content here'
+    content: 'and he found the world'
   }
 ];
 

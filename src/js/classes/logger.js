@@ -29,8 +29,8 @@ const LoginViewer = Backbone.View.extend({
     let isLoggedIn = this.model.get('isLoggedin');
     let signInText = `🌱Logga in!🌱`;
     let signOutText = `🌱Logga ut!🌱`;
-    let signInButton = `<button id="loginButton">${signInText}</button>`;
-    let logOutButton = `<button id="loginButton">${signOutText}</button>`;
+    let signInButton = `<button class="loginButton">${signInText}</button>`;
+    let logOutButton = `<button class="loginButton">${signOutText}</button>`;
     if (isLoggedIn) {
       this.$el.html(signInButton);
     } else {
@@ -38,7 +38,7 @@ const LoginViewer = Backbone.View.extend({
     }
   },
   events: {
-    "click #loginButton": 'clickHandler'
+    "click .loginButton": 'clickHandler'
   },
   clickHandler: function(event) {
     this.model.handler(event);
