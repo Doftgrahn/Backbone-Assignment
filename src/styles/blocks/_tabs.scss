@@ -8,7 +8,6 @@
   &__wrapper {
     border-radius: 20px;
     width: 50%;
-    height: 200px;
   }
 
   &__header {
@@ -52,11 +51,10 @@
     flex-direction: row;
     justify-content: space-between;
 
-
-
     button {
-      height:50px;
-      background:$color-yellow ;
+      background: $color-yellow;
+      border-radius: 20px;
+      padding:.3em;
       outline: none;
 
       &:hover {
@@ -64,8 +62,4 @@
       }
     }
   }
-}
-
-.show {
-  display: block;
 }
