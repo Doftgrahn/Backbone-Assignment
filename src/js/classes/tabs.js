@@ -15,27 +15,17 @@ const tabContent = [{
   }
 ];
 
-
-
 const TabModel = Backbone.Model.extend({
   defaults: {
     className: 'active',
     selectedTab: 0,
   },
-  tab1: function() {
-    this.set({
-      selectedTab: 0,
-    });
+  tab1: function() {this.set({selectedTab: 0});
   },
   tab2: function() {
-    this.set({
-      selectedTab: 1,
-    });
+    this.set({selectedTab: 1});
   },
-  tab3: function() {
-    this.set({
-      selectedTab: 2
-    });
+  tab3: function() {this.set({selectedTab: 2});
   },
   previousButton: function() {
     let oldSelectedTab = this.get('selectedTab');
@@ -43,15 +33,19 @@ const TabModel = Backbone.Model.extend({
     if (newSelectedTab < 0) {
       newSelectedTab = tabContent.length - 1;
     }
-    this.set({selectedTab: newSelectedTab});
+    this.set({
+      selectedTab: newSelectedTab
+    });
   },
   nextButton: function() {
     let oldSelectedTab = this.get('selectedTab');
     let newSelectedTab = oldSelectedTab + 1;
-    if (newSelectedTab < tabContent.length + 1) {
-      this.set({selectedTab: 0})
+    if (newSelectedTab > tabContent.length -1 ) {
+      newSelectedTab = 0;
     }
-    this.set({selectedTab: newSelectedTab});
+    this.set({
+      selectedTab: newSelectedTab
+    });
   }
 });
 
@@ -99,7 +93,7 @@ const TabContainer = Backbone.View.extend({
     let el = this.$el;
     el.html('');
     let currentTag = this.model.get('selectedTab');
-    let prevButton = `<button class="prev">Prec</button>`;
+    let prevButton = `<button class="prev">Prev</button>`;
     let nextButton = `<button class="next">Next</button>`;
     let content;
     if (currentTag == 0) {
