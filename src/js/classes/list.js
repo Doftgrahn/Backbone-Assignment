@@ -116,12 +116,12 @@ const ArtistViewList = Backbone.View.extend({
         model: artist
       });
       artistView.render();
-      ul.append(artistView.el);
+      ul.append(artistView.$el);
     });
     el.html('');
     el.append(ul);
-    let addForm = `<input type="text" id="inputArtist">
-    <input type="text id="inputArtform">
+    let addForm = `<input type="text" id="inputArtist"/>
+    <input type="text" id="inputArtform"/>
     <button type="button" id="addArtistButton">Add!</button>`;
     el.append(addForm);
   },
@@ -134,18 +134,15 @@ const ArtistViewList = Backbone.View.extend({
     let model = new ListModel({
       artist: this.form.artist,
       artForm: this.form.artForm
-    })
+    });
+    this.collection.add(model);
   },
   form: {
     artist: '',
     artForm: ''
   },
-  onArtistChange: function(event) {
-    this.form.name = event.target.value;
-  },
-  onArtFormChange: function(event) {
-    this.form.name = event.target.value
-  }
+  onArtistChange: function(event) {this.form.artist = event.target.value;},
+  onArtFormChange: function(event) {this.form.artForm = event.target.value;},
 });
 
 export default class List {
